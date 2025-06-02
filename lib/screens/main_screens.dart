@@ -13,15 +13,39 @@ class MainScreens extends StatefulWidget {
 
 class _MainScreensState extends State<MainScreens> {
   int selectedIndex = 0;
-  List<int> loadPages = [0]; // 크기는 1
+  final List<Widget?> _screens = List.filled(5, null);
 
-  void selectMenuButton(int index) {
-    if (!loadPages.contains(index)) {
-      loadPages.add(index); // [0,1]  <- 없으면 배열에 담기면서 크기가 늘어난다 / 크기 2
+  @override
+  void initState() {
+    super.initState();
+    _screens[0] = HomeScreen(); // 처음은 미리 생성
+  }
+
+  void selectBottomMenu(int index) {
+    if (_screens[index] == null) {
+      _screens[index] = _buildScreen(index); // 처음 클릭 시 생성
     }
 
-    selectedIndex = index;
-    setState(() {}); // 강제로 rebuild 하기 때문에 깊은 복사 필요 없음 / 현재 상태대로(0,1이 들어온 상태) 다시 그린다
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  Widget _buildScreen(int index) {
+    switch (index) {
+      case 0:
+        return HomeScreen();
+      case 1:
+        return NeighborhoodlifeScreen();
+      case 2:
+        return NearMeScreen();
+      case 3:
+        return ChattingScreen();
+      case 4:
+        return MyCarrrotScreen();
+      default:
+        return Container();
+    }
   }
 
   @override
@@ -29,13 +53,7 @@ class _MainScreensState extends State<MainScreens> {
     return Scaffold(
       body: IndexedStack(
         index: selectedIndex,
-        children: [
-          loadPages.contains(0) ? const HomeScreen() : Container(),
-          loadPages.contains(1) ? const NeighborhoodlifeScreen() : Container(),
-          loadPages.contains(2) ? const NearMeScreen() : Container(),
-          loadPages.contains(3) ? const ChattingScreen() : Container(),
-          loadPages.contains(4) ? const MyCarrrotScreen() : Container(),
-        ],
+        children: _screens.map((screen) => screen ?? Container()).toList(),
       ),
       bottomNavigationBar: _bottomNavigationBar(),
     );
@@ -44,20 +62,18 @@ class _MainScreensState extends State<MainScreens> {
   BottomNavigationBar _bottomNavigationBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      //showSelectedLabels: false,
-      //showUnselectedLabels: false,
+      selectedFontSize: 12.0,
+      unselectedFontSize: 12.0,
       selectedItemColor: Colors.orange,
-      unselectedItemColor: Colors.black,
+      unselectedItemColor: Colors.black54,
       currentIndex: selectedIndex,
-      onTap: selectMenuButton,
-      selectedLabelStyle: TextStyle(fontSize: 12), // 고정 크기
-      unselectedLabelStyle: TextStyle(fontSize: 12), // 고정 크기
-      items: [
+      onTap: selectBottomMenu,
+      items: const [
         BottomNavigationBarItem(label: "홈", icon: Icon(CupertinoIcons.home)),
         BottomNavigationBarItem(label: "동네생활", icon: Icon(CupertinoIcons.square_on_square)),
-        BottomNavigationBarItem(label: "내 근처", icon: Icon(CupertinoIcons.placemark)),
+        BottomNavigationBarItem(label: "내근처", icon: Icon(CupertinoIcons.placemark)),
         BottomNavigationBarItem(label: "채팅", icon: Icon(CupertinoIcons.chat_bubble_2)),
-        BottomNavigationBarItem(label: "나의 당근", icon: Icon(CupertinoIcons.person)),
+        BottomNavigationBarItem(label: "나의당근", icon: Icon(CupertinoIcons.person)),
       ],
     );
   }
