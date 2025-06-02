@@ -17,8 +17,8 @@ class ListItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                "https://picsum.photos/id/237/200/300", // p.urlToImage
+              child: Image.asset(
+                p.urlToImage, // p.urlToImage
                 width: 115,
                 height: 115,
                 fit: BoxFit.cover,
@@ -38,7 +38,6 @@ class ListItem extends StatelessWidget {
                     Row(
                       children: [
                         Spacer(),
-
                         Icon(CupertinoIcons.chat_bubble_2),
                         Text("${p.commentsCount}"),
                         SizedBox(width: 8),

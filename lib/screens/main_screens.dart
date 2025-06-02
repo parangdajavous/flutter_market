@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_market/screens/chatting/chatting_screen.dart';
 import 'package:flutter_market/screens/home/home_screen.dart';
-import 'package:flutter_market/screens/my_carrot/my_carrrot_screen.dart';
+import 'package:flutter_market/screens/home/my_carrot/my_carrrot_screen.dart';
 import 'package:flutter_market/screens/near_me/near_me_screen.dart';
 import 'package:flutter_market/screens/neighborhood_life/neighborhoodlife_screen.dart';
 
